@@ -23,4 +23,10 @@ public class Tests
     {
         Assert.That(_evaluator.EvaluateRule(5), Is.EqualTo("Nation"));
     }
+
+    [Test]
+    public void EvaluateRule_ForMultiplesOfBothThreeAndFive_ShouldOutputLiveNation()
+    {
+        Assert.That(_evaluator.EvaluateRule(15), Is.EqualTo("LiveNation"));
+    }
 }
