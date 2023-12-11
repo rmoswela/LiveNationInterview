@@ -4,6 +4,11 @@ public class RulesFactory : IRulesFactory
 {
     public IEnumerable<IRule> InstantiateRules()
     {
-        throw new NotImplementedException();
+        var rules = new List<IRule>()
+        {
+            new LiveRule()
+        };
+
+        return rules;
     }
 }

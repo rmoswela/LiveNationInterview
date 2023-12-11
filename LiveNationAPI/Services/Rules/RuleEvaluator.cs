@@ -2,15 +2,24 @@
 
 public class RuleEvaluator : IRuleEvaluator
 {
-    private readonly IRulesFactory _rulesFactory;
+    private readonly IRule[] _rules;
 
     public RuleEvaluator(IRulesFactory rulesFactory)
     {
-        _rulesFactory = rulesFactory;
+        _rules = rulesFactory.InstantiateRules().ToArray();
     }
 
     public string EvaluateRule(uint number)
-    {
-        throw new NotImplementedException();
+    {        
+        foreach (var rule in _rules)
+        {
+            var result = rule.ApplyRule(number);
+            if (result != null)
+            {
+                return result;
+            }
+        }
+
+        return null;
     }
 }
