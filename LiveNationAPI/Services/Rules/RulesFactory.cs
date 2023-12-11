@@ -6,7 +6,8 @@ public class RulesFactory : IRulesFactory
     {
         var rules = new List<IRule>()
         {
-            new LiveRule()
+            new LiveRule(),
+            new NationRule()
         };
 
         return rules;
