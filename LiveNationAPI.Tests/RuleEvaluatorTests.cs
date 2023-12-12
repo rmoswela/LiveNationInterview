@@ -29,4 +29,10 @@ public class Tests
     {
         Assert.That(_evaluator.EvaluateRule(15), Is.EqualTo("LiveNation"));
     }
+
+    [Test]
+    public void EvaluateRule_OtherValues_ShouldOutputThoseOtherValues()
+    {
+        Assert.That(_evaluator.EvaluateRule(16), Is.EqualTo("16"));
+    }
 }
