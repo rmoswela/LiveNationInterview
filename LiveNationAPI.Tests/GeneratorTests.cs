@@ -70,6 +70,8 @@ public class GeneratorTests
         var result = _generator.GenerateResult(request);
 
         // Assert
-        Assert.That(result, Is.EqualTo(computedResponse));
+        Assert.That(JsonSerializer.Serialize(result), Is.EqualTo(JsonSerializer.Serialize(computedResponse)));
+        _cacheServiceMock.Verify(c => c.GetCachedValue(It.IsAny<string>()), Times.Once);
+        _cacheServiceMock.Verify(c => c.SetCacheValue(It.IsAny<NumberRangeResponseDto>(), It.IsAny<string>()), Times.Once);
     }
 }

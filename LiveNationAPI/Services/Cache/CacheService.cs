@@ -22,6 +22,6 @@ internal class CacheService : ICacheService
 
     public NumberRangeResponseDto SetCacheValue(NumberRangeResponseDto numberRangeResponse, string key)
     {
-        throw new NotImplementedException();
+        return _memoryCache.Set(key, numberRangeResponse, TimeSpan.FromHours(1));
     }
 }
