@@ -10,8 +10,10 @@ public class RuleEvaluator : IRuleEvaluator
     }
 
     public string EvaluateRule(uint number)
-    {        
-        foreach (var rule in _rules)
+    {
+        var orderedRules = _rules.OrderBy(x => x.OrderOfExecution).ToArray();
+
+        foreach (var rule in orderedRules)
         {
             var result = rule.ApplyRule(number);
             if (result != null)
