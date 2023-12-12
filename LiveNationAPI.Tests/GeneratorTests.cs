@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using System.Text.Json;
+using Moq;
 
 namespace LiveNationAPI.Tests;
 
@@ -42,5 +43,33 @@ public class GeneratorTests
         Assert.That(result, Is.EqualTo(cachedResponse));
         _cacheServiceMock.Verify(c => c.GetCachedValue(It.IsAny<string>()), Times.Once);
         _cacheServiceMock.Verify(c => c.SetCacheValue(It.IsAny<NumberRangeResponseDto>(), It.IsAny<string>()), Times.Never);
+    }
+
+    [Test]
+    public void GenerateResult_CachedValueDoesNotExist_ComputesResultAndCachesValue()
+    {
+        // Arrange
+        var request = new NumberRangeRequestDto { From = 15, To = 15 };
+        var computedResponse = new NumberRangeResponseDto
+        {
+            Result = "LiveNation",
+            Summary = new Summary 
+            {
+                Live = "0",
+                Nation = "0",
+                LiveNation = "1",
+                Integer = "0"
+            }
+        };
+
+        _cacheServiceMock.Setup(c => c.GetCachedValue(It.IsAny<string>())).Returns((NumberRangeResponseDto)null);
+        _ruleEvaluatorMock.Setup(r => r.EvaluateRule(It.IsAny<uint>())).Returns("LiveNation");
+        _cacheServiceMock.Setup(c => c.SetCacheValue(It.IsAny<NumberRangeResponseDto>(), It.IsAny<string>()));
+
+        // Act
+        var result = _generator.GenerateResult(request);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(computedResponse));
     }
 }
