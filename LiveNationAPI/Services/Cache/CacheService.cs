@@ -10,6 +10,7 @@ internal class CacheService : ICacheService
     {
         _memoryCache = memoryCache;
     }
+    
     public NumberRangeResponseDto GetCachedValue(string key)
     {
         if (_memoryCache.TryGetValue(key, out NumberRangeResponseDto cachedValue))
