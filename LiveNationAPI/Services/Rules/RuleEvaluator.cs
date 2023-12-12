@@ -22,6 +22,6 @@ public class RuleEvaluator : IRuleEvaluator
             }
         }
 
-        return null;
+        return number.ToString();
     }
 }
