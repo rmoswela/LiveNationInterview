@@ -58,4 +58,27 @@ public class LiveNationControllerTests
         Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
         Assert.That(result.Value, Is.EqualTo(responseJson));
     }
+
+    [Test]
+    public void Get_InvalidNumberRangeRequest_ShouldReturnBadRequestWithErrorMessage()
+    {
+        // Arrange
+        var numberRangeRequest = new NumberRangeRequestDto
+        {
+            From = 0,
+            To = 10
+        };
+
+        var errorMessage = "The values have to be in a range of 1 and greater";
+
+        _generatorMock.Setup(x => x.GenerateResult(It.Is<NumberRangeRequestDto>(r => r.From == numberRangeRequest.From && r.To == numberRangeRequest.To)))
+            .Returns(new NumberRangeResponseDto());
+        
+        // Act
+        var result = _controller.Get(numberRangeRequest) as ObjectResult;
+
+        // Assert
+        Assert.That(result, Is.InstanceOf<IActionResult>());
+        Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.BadRequest));
+    }
 }
