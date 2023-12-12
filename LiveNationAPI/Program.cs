@@ -1,4 +1,6 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using LiveNationAPI;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -6,6 +8,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IRulesFactory, RulesFactory>();
+builder.Services.AddScoped<IGenerator, Generator>();
+builder.Services.AddScoped<IRuleEvaluator, RuleEvaluator>();
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
