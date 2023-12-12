@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace LiveNationAPI;
 
@@ -15,6 +16,14 @@ public class LiveNationController : ControllerBase
 
     public IActionResult Get(NumberRangeRequestDto numberRangeRequest)
     {
-        throw new NotImplementedException();
+        var response = _generator.GenerateResult(numberRangeRequest);
+
+        var options = new JsonSerializerOptions {
+          WriteIndented = true
+        };
+
+        var jsonResponse = JsonSerializer.Serialize(response, options);
+
+        return Ok(jsonResponse);
     }
 }
