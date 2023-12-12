@@ -54,5 +54,8 @@ public class LiveNationControllerTests
 
         // Assert
         Assert.That(result, Is.InstanceOf<IActionResult>());
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.OK));
+        Assert.That(result.Value, Is.EqualTo(responseJson));
     }
 }
