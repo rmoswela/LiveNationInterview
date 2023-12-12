@@ -80,5 +80,6 @@ public class LiveNationControllerTests
         // Assert
         Assert.That(result, Is.InstanceOf<IActionResult>());
         Assert.That(result.StatusCode, Is.EqualTo((int)HttpStatusCode.BadRequest));
+        Assert.That(result.Value, Is.EqualTo(errorMessage));
     }
 }
